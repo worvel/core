@@ -1,0 +1,22 @@
+{
+  "name": "worvel/core",
+  "version": "0.3",
+  "description": "The core of worvel framework",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+
+  "keywords": [
+    "framework",
+    "worvel",
+    "wordpress",
+    "theme"
+  ],
+  "author": "Fahad Mayow",
+  "license": "MIT",
+
+  "devDependencies": {
+    "@prettier/plugin-php": "^0.18.4",
+    "prettier": "^2.6.2"
+  }
+}
