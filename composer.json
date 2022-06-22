@@ -1,0 +1,23 @@
+{
+    "name": "worvel/core",
+    "description": "The core of worvel framework",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Fahad Mayow",
+            "email": "fahadmayow@gmail.com"
+        }
+    ],
+    "autoload": {
+        "files": [
+            "config/functions.php"
+        ],
+        "psr-4": {
+            "Core\\": [
+                "Commands/",
+                "Hooks/",
+                "Http/"
+            ]
+        }
+    }
+}
