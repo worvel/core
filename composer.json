@@ -1,7 +1,8 @@
 {
     "name": "worvel/core",
     "description": "The core of worvel framework",
-    "type": "library",
+    "keywords": ["worvel", "framework", "wordpess"],
+    "license": "MIT",
     "authors": [
         {
             "name": "Fahad Mayow",
