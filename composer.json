@@ -14,11 +14,7 @@
             "config/functions.php"
         ],
         "psr-4": {
-            "Core\\": [
-                "Commands/",
-                "Hooks/",
-                "Http/"
-            ]
+            "Core\\": "src/"
         }
     }
 }
