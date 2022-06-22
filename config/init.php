@@ -10,9 +10,20 @@
  *
  */
 
-$hooks = require_once get_template_directory() . "/config/hooks.php";
+$hooks = require_once get_template_directory() .
+    "/vendor/worvel/core/config/hooks.php";
+$customHooks = require_once get_template_directory() . "/config/hooks.php";
 
-foreach ($hooks as $hook) {
-    $setup = new $hook();
-    $setup->init();
+if (is_array($hooks) && count($hooks)) {
+    foreach ($hooks as $hook) {
+        $setup = new $hook();
+        $setup->init();
+    }
+}
+
+if (is_array($customHooks) && count($customHooks)) {
+    foreach ($customHooks as $hook) {
+        $setup = new $hook();
+        $setup->init();
+    }
 }

@@ -11,7 +11,7 @@ class Console
         $flags = array_values($argv);
 
         $consoles = require_once get_template_directory() .
-            "vendor/core/config/console.php";
+            "/vendor/worvel/core/config/console.php";
         $customConsoles = require_once get_template_directory() .
             "/config/console.php";
 
