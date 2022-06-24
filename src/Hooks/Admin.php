@@ -6,48 +6,62 @@ class Admin
 {
     public function init()
     {
-        add_action("admin_menu", [$this, "registerAdminMenu"]);
+        add_action("admin_menu", [$this, "registerAdminSidebarMenu"]);
+        add_action("admin_bar_menu", [$this, "registerAdminbarMenu"], 500);
     }
 
-    public function registerAdminMenu()
+    public function registerAdminSidebarMenu()
     {
         $adminPages = require get_template_directory() . "/config/admin.php";
+        $sidebarMenus = $adminPages["sidebar"];
 
-        if (is_array($adminPages) && count($adminPages) > 0) {
-            foreach ($adminPages as $adminPage) {
-                if ($adminPage["level"] === "top") {
+        if (is_array($sidebarMenus) && count($sidebarMenus) > 0) {
+            foreach ($sidebarMenus as $sidebarMenu) {
+                if ($sidebarMenu["level"] === "top") {
                     add_menu_page(
-                        $adminPage["page_title"],
-                        $adminPage["menu_title"],
-                        $adminPage["capability"],
-                        $adminPage["menu_slug"],
-                        is_array($adminPage["callback"])
+                        $sidebarMenu["page_title"],
+                        $sidebarMenu["menu_title"],
+                        $sidebarMenu["capability"],
+                        $sidebarMenu["menu_slug"],
+                        is_array($sidebarMenu["callback"])
                             ? [
-                                new $adminPage["callback"][0](),
-                                $adminPage["callback"][1],
+                                new $sidebarMenu["callback"][0](),
+                                $sidebarMenu["callback"][1],
                             ]
-                            : $adminPage["callback"],
-                        $adminPage["icon"],
-                        $adminPage["position"],
+                            : $sidebarMenu["callback"],
+                        $sidebarMenu["icon"],
+                        $sidebarMenu["position"],
                     );
                 }
 
-                if ($adminPage["level"] === "sub") {
+                if ($sidebarMenu["level"] === "sub") {
                     add_submenu_page(
-                        $adminPage["parent_slug"],
-                        $adminPage["page_title"],
-                        $adminPage["menu_title"],
-                        $adminPage["capability"],
-                        $adminPage["menu_slug"],
-                        is_array($adminPage["callback"])
+                        $sidebarMenu["parent_slug"],
+                        $sidebarMenu["page_title"],
+                        $sidebarMenu["menu_title"],
+                        $sidebarMenu["capability"],
+                        $sidebarMenu["menu_slug"],
+                        is_array($sidebarMenu["callback"])
                             ? [
-                                new $adminPage["callback"][0](),
-                                $adminPage["callback"][1],
+                                new $sidebarMenu["callback"][0](),
+                                $sidebarMenu["callback"][1],
                             ]
-                            : $adminPage["callback"],
-                        $adminPage["position"],
+                            : $sidebarMenu["callback"],
+                        $sidebarMenu["position"],
                     );
                 }
+            }
+        }
+    }
+
+    public function registerAdminbarMenu(\WP_Admin_Bar $adminbar)
+    {
+        $adminPages = require get_template_directory() . "/config/admin.php";
+        $adminbarMenus = $adminPages["adminbar"];
+
+        if (is_array($adminbarMenus) && count($adminbarMenus) > 0) {
+            foreach ($adminbarMenus as $adminbarMenu) {
+                $adminbar->add_menu($adminbarMenu);
             }
         }
     }
