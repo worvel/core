@@ -14,35 +14,43 @@ class Setup
 
     public function registerThemeScripts()
     {
-        $scripts = require config("scripts.php");
+        $sources = require config("scripts.php");
 
-        if (is_array($scripts) && count($scripts) > 0) {
-            foreach ($scripts as $type => $args) {
-                if ($type === "style") {
+        if (is_array($sources) && count($sources) > 0) {
+            $styles = $sources["styles"];
+            $scripts = $sources["scripts"];
+            $localize_scripts = $sources["localize_scripts"];
+
+            if (is_array($styles) && count($styles) > 0) {
+                foreach ($styles as $style) {
                     wp_enqueue_style(
-                        $args["name"],
-                        $args["source"],
-                        $args["deps"],
-                        $args["version"],
-                        $args["media"],
+                        $style["name"],
+                        $style["source"],
+                        $style["deps"],
+                        $style["version"],
+                        $style["media"],
                     );
                 }
+            }
 
-                if ($type === "script") {
+            if (is_array($scripts) && count($scripts) > 0) {
+                foreach ($scripts as $script) {
                     wp_enqueue_script(
-                        $args["name"],
-                        $args["source"],
-                        $args["deps"],
-                        $args["version"],
-                        $args["in_footer"],
+                        $script["name"],
+                        $script["source"],
+                        $script["deps"],
+                        $script["version"],
+                        $script["in_footer"],
                     );
                 }
+            }
 
-                if ($type === "localize_script") {
+            if (is_array($localize_scripts) && count($localize_scripts) > 0) {
+                foreach ($localize_scripts as $localize_script) {
                     wp_localize_script(
-                        $args["handle"],
-                        $args["object_name"],
-                        $args["data"],
+                        $localize_script["handle"],
+                        $localize_script["object_name"],
+                        $localize_script["data"],
                     );
                 }
             }
@@ -51,26 +59,32 @@ class Setup
 
     public function registerAdminScripts()
     {
-        $scripts = require config("scripts.php");
-        if (is_array($scripts) && count($scripts) > 0) {
-            foreach ($scripts as $type => $args) {
-                if ($type === "admin_style") {
+        $sources = require config("scripts.php");
+
+        if (is_array($sources) && count($sources) > 0) {
+            $styles = $sources["admin_styles"];
+            $scripts = $sources["admin_scripts"];
+
+            if (is_array($styles) && count($styles) > 0) {
+                foreach ($styles as $style) {
                     wp_enqueue_style(
-                        $args["name"],
-                        $args["source"],
-                        $args["deps"],
-                        $args["version"],
-                        $args["media"],
+                        $style["name"],
+                        $style["source"],
+                        $style["deps"],
+                        $style["version"],
+                        $style["media"],
                     );
                 }
+            }
 
-                if ($type === "admin_script") {
+            if (is_array($scripts) && count($scripts) > 0) {
+                foreach ($scripts as $script) {
                     wp_enqueue_script(
-                        $args["name"],
-                        $args["source"],
-                        $args["deps"],
-                        $args["version"],
-                        $args["in_footer"],
+                        $script["name"],
+                        $script["source"],
+                        $script["deps"],
+                        $script["version"],
+                        $script["in_footer"],
                     );
                 }
             }
