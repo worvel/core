@@ -19,7 +19,7 @@ class Setup
         if (is_array($sources) && count($sources) > 0) {
             $styles = $sources["styles"];
             $scripts = $sources["scripts"];
-            $localize_scripts = $sources["localize_scripts"];
+            $localize_scripts = isset($sources["localize_scripts"]) ? $sources["localize_scripts"] : null;
 
             if (is_array($styles) && count($styles) > 0) {
                 foreach ($styles as $style) {
@@ -104,10 +104,13 @@ class Setup
 
         if (is_array($supports) && count($supports) > 0) {
             foreach ($supports as $support) {
-                add_theme_support(
-                    $support["feature"],
-                    !$support["args"] ? [] : $support["args"],
-                );
+                if(isset($support["feature"]))
+                {
+                    add_theme_support(
+                        $support["feature"],
+                        isset($support["args"]) ? $support["args"] : [] ,
+                    );
+                }
             }
         }
     }
